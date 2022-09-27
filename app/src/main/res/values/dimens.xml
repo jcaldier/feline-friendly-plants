@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pd24">24dp</dimen>
+    <dimen name="pd16">16dp</dimen>
+    <dimen name="pd4">4dp</dimen>
+    <dimen name="pd8">8dp</dimen>
+    <dimen name="plant_card_height">370dp</dimen>
+    <dimen name="pd1">1dp</dimen>
+    <dimen name="card_image_size">200dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="toxic_status_icon_size">48dp</dimen>
+</resources>
