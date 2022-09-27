@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/pd8"
+    android:paddingVertical="@dimen/pd4">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/plant_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/plant_card_height"
+        android:layout_margin="@dimen/pd8"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/card_stroke_gray"
+        app:strokeWidth="@dimen/pd1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/plant_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_image_size"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+            
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/toxic_status_icon_size"
+                android:layout_height="@dimen/toxic_status_icon_size"
+                android:id="@+id/toxic_status_symbol"
+                android:layout_margin="@dimen/pd8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/common_plant_name"
+                app:layout_constraintTop_toBottomOf="@id/plant_image"
+                tools:src="@drawable/ic_toxic_status"/>
+
+            <TextView
+                android:id="@+id/common_plant_name"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/pd8"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/pd8"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:layout_constraintEnd_toStartOf="@id/toxic_status_symbol"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plant_image"
+                tools:text="@tools:sample/cities"/>
+
+            <TextView
+                android:id="@+id/scientific_plant_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/pd8"
+                android:layout_marginTop="@dimen/pd8"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintEnd_toStartOf="@id/toxic_status_symbol"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/common_plant_name"
+                tools:text="@tools:sample/lorem"/>
+
+            <TextView
+                android:id="@+id/plant_aliases"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/pd8"
+                android:layout_marginTop="@dimen/pd8"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scientific_plant_name"
+                tools:text="@tools:sample/lorem/random"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/read_more_button"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/pd8"
+                android:layout_marginTop="@dimen/pd8"
+                android:text="@string/read_more"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plant_aliases"
+                app:layout_constraintVertical_bias="1"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
