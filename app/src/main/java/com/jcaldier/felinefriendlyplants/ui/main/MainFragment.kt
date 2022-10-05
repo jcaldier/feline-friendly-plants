@@ -12,6 +12,7 @@ import com.jcaldier.felinefriendlyplants.databinding.FragmentMainBinding
 import com.jcaldier.felinefriendlyplants.ui.main.adapter.PlantListAdapter
 import com.jcaldier.felinefriendlyplants.ui.main.data.MainViewState
 import com.jcaldier.felinefriendlyplants.ui.main.data.Plant
+import com.jcaldier.felinefriendlyplants.ui.main.data.PlantToxicity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,8 +27,7 @@ class MainFragment : Fragment() {
     private val plantAdapter = PlantListAdapter(::onPlantClicked)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -45,6 +45,10 @@ class MainFragment : Fragment() {
         binding.errorRefreshButton.setOnClickListener {
             viewModel.loadContent()
         }
+
+        binding.filtersGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            onFilterChipClicked(checkedIds)
+        }
     }
 
     private fun observeStates() {
@@ -59,9 +63,13 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun showContent(appliedFilters: List<String>, plantList: List<Plant>) {
-        // TODO select chips associated with filters
+    private fun showContent(appliedFilters: List<PlantToxicity>, plantList: List<Plant>) {
         plantAdapter.submitList(plantList)
+        binding.mildlyToxicChip.isChecked =
+            appliedFilters.contains(PlantToxicity.MildlyToxic)
+        binding.nonToxicChip.isChecked =
+            appliedFilters.contains(PlantToxicity.NonToxic)
+        binding.toxicChip.isChecked = appliedFilters.contains(PlantToxicity.Toxic)
         binding.errorLayout.visibility = View.GONE
         binding.contentLayout.visibility = View.VISIBLE
     }
@@ -75,17 +83,28 @@ class MainFragment : Fragment() {
         // TODO
     }
 
+    private fun onFilterChipClicked(checkedIds: List<Int>) {
+        val selectedFilters = checkedIds.mapNotNull {
+            when (it) {
+                binding.toxicChip.id -> PlantToxicity.Toxic
+                binding.mildlyToxicChip.id -> PlantToxicity.MildlyToxic
+                binding.nonToxicChip.id -> PlantToxicity.NonToxic
+                else -> null
+            }
+        }
+        viewModel.changeFiltering(selectedFilters)
+    }
+
     private fun onPlantClicked(plantId: Long) {
         Toast.makeText(
-            requireContext(),
-            "TODO: Not yet implemented, ID: $plantId",
-            Toast.LENGTH_SHORT
+            requireContext(), "TODO: Not yet implemented, ID: $plantId", Toast.LENGTH_SHORT
         ).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.plantList.adapter = null
+        binding.filtersGroup.setOnCheckedStateChangeListener(null)
         _binding = null
     }
 
