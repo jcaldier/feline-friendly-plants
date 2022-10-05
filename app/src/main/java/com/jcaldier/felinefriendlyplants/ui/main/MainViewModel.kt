@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jcaldier.felinefriendlyplants.ui.main.data.MainViewState
 import com.jcaldier.felinefriendlyplants.ui.main.data.MockDataHelper
+import com.jcaldier.felinefriendlyplants.ui.main.data.PlantToxicity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,15 +27,31 @@ class MainViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             // TODO replace with real implementation
             _state.update { MainViewState.Loading }
-            val plantList =
-                listOf(
-                    MockDataHelper.aloe,
-                    MockDataHelper.waxPlant,
-                    MockDataHelper.spiderPlant,
-                    MockDataHelper.caeroba
-                )
-            val selectedFilters = emptyList<String>()
+            val plantList = listOf(
+                MockDataHelper.aloe,
+                MockDataHelper.waxPlant,
+                MockDataHelper.spiderPlant,
+                MockDataHelper.caeroba
+            )
+            val selectedFilters = emptyList<PlantToxicity>()
             _state.update { MainViewState.Content(selectedFilters, plantList) }
+        }
+    }
+
+    fun changeFiltering(newFilters: List<PlantToxicity>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            // TODO replace with real implementation
+            _state.update { MainViewState.Loading }
+            val plantList = listOf(
+                MockDataHelper.aloe,
+                MockDataHelper.waxPlant,
+                MockDataHelper.spiderPlant,
+                MockDataHelper.caeroba
+            ).filter { plant ->
+                newFilters.contains(plant.toxicStatus)
+            }
+
+            _state.update { MainViewState.Content(newFilters, plantList) }
         }
     }
 

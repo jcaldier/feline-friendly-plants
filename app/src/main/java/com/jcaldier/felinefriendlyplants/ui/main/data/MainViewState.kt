@@ -11,7 +11,7 @@ sealed class MainViewState : Parcelable {
     object Error : MainViewState()
 
     data class Content(
-        val appliedFilters: List<String>,
+        val appliedFilters: List<PlantToxicity>,
         val plantList: List<Plant>
     ) : MainViewState()
 
